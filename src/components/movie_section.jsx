@@ -19,7 +19,7 @@ export default function Movie_section() {
     e.preventDefault();
     try {
       const { data } = await axios.get(
-        `http://www.omdbapi.com/?i=tt3896198&apikey=d9176a5c&s=${search}`
+        `https://www.omdbapi.com/?i=tt3896198&apikey=d9176a5c&s=${search}`
       );
       setMovies(data.Search);
     } catch (error) {
@@ -31,7 +31,7 @@ export default function Movie_section() {
   const fetchMovies = async () => {
     try {
       const { data } = await axios.get(
-        `http://www.omdbapi.com/?i=tt3896198&apikey=d9176a5c&t=movie&s=all`
+        `https://www.omdbapi.com/?i=tt3896198&apikey=d9176a5c&t=movie&s=all`
       );
       setMovies(data.Search);
     } catch (error) {
@@ -41,6 +41,7 @@ export default function Movie_section() {
   };
 
   useEffect(() => {
+    // setTimeout(fetchMovies, 5000);
     fetchMovies();
   }, []);
   return (
@@ -66,50 +67,63 @@ export default function Movie_section() {
         </FormControl>
       </form>
 
-      <Stack
-        ml={["20px", "20px", "77px"]}
-        mb="60px"
-        spacing={"60px"}
-        direction="column"
-      >
-        <Box>
-          <Text>Movie category name</Text>
-          <Box
-            overflowX="auto"
-            sx={{
-              "::-webkit-scrollbar": {
-                display: "none",
-              },
-            }}
-          >
-            <Box display="flex" alignItems="center" gap="13px" w={"100vw"}>
-              {movies.length &&
-                movies.map(({ Title, imdbID }) => (
+      {movies.length ? (
+        <Stack
+          ml={["20px", "20px", "77px"]}
+          mb="60px"
+          spacing={"60px"}
+          direction="column"
+        >
+          <Box>
+            <Text>Movie category name</Text>
+            <Box
+              overflowX="auto"
+              sx={{
+                "::-webkit-scrollbar": {
+                  display: "none",
+                },
+              }}
+            >
+              <Box display="flex" alignItems="center" gap="13px" w={"100vw"}>
+                {movies.map(({ Title, imdbID }) => (
                   <Movie_card title={Title} key={imdbID} />
                 ))}
+              </Box>
             </Box>
           </Box>
-        </Box>
 
-        <Box>
-          <Text>Movie category name</Text>
-          <Box
-            overflowX="auto"
-            sx={{
-              "::-webkit-scrollbar": {
-                display: "none",
-              },
-            }}
-          >
-            <Box display="flex" alignItems="center" gap="13px" w="100vw">
-              {movies.length &&
-                movies.map(({ Title, imdbID }) => (
+          <Box>
+            <Text>Movie category name</Text>
+            <Box
+              overflowX="auto"
+              sx={{
+                "::-webkit-scrollbar": {
+                  display: "none",
+                },
+              }}
+            >
+              <Box display="flex" alignItems="center" gap="13px" w="100vw">
+                {movies.map(({ Title, imdbID }) => (
                   <Movie_card title={Title} key={imdbID} />
                 ))}
+              </Box>
             </Box>
           </Box>
+        </Stack>
+      ) : (
+        <Box
+          w="calc(100% - 40px)"
+          my="38px"
+          mx="auto"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          fontSize="20px"
+          fontWeight="500"
+        >
+          Fetching Movies...
         </Box>
-      </Stack>
+      )}
     </Box>
   );
 }
