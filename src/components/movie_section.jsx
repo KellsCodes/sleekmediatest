@@ -61,6 +61,7 @@ export default function Movie_section() {
             borderRadius="0"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
+            focusBorderColor={themeColors.gray}
           />
         </FormControl>
       </form>
