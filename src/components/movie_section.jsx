@@ -21,20 +21,22 @@ export default function Movie_section() {
       const { data } = await axios.get(
         `http://www.omdbapi.com/?i=tt3896198&apikey=d9176a5c&s=${search}`
       );
-      console.log(data);
+      setMovies(data.Search);
     } catch (error) {
       console.log(error);
+      alert("an error loading movies, please reload the page.");
     }
   };
 
   const fetchMovies = async () => {
     try {
       const { data } = await axios.get(
-        `http://www.omdbapi.com/?i=tt3896198&apikey=d9176a5c&t=movie`
+        `http://www.omdbapi.com/?i=tt3896198&apikey=d9176a5c&t=movie&s=all`
       );
-      console.log(data);
+      setMovies(data.Search);
     } catch (error) {
       console.log(error);
+      alert("an error loading movies, please reload the page.");
     }
   };
 
@@ -80,9 +82,10 @@ export default function Movie_section() {
             }}
           >
             <Box display="flex" alignItems="center" gap="13px" w={"100vw"}>
-              {[1, 3, 4, 5, 6].map((item) => (
-                <Movie_card key={item} />
-              ))}
+              {movies.length &&
+                movies.map(({ Title, imdbID }) => (
+                  <Movie_card title={Title} key={imdbID} />
+                ))}
             </Box>
           </Box>
         </Box>
@@ -98,9 +101,10 @@ export default function Movie_section() {
             }}
           >
             <Box display="flex" alignItems="center" gap="13px" w="100vw">
-              {[1, 3, 4, 5, 6].map((item) => (
-                <Movie_card key={item} />
-              ))}
+              {movies.length &&
+                movies.map(({ Title, imdbID }) => (
+                  <Movie_card title={Title} key={imdbID} />
+                ))}
             </Box>
           </Box>
         </Box>
